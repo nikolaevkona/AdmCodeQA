@@ -25,6 +25,7 @@ if __name__ == "__main__":
                              model_name=args.vector_model_name)
     client = ChatClient(args.api_key, vector_store, args.top_k)
     while True:
+        print("Штраф для какого нарушения вас интересует?")
         query = input().rstrip("\n")
         respond = client.respond(query)
         print(respond)

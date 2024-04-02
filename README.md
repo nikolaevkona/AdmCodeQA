@@ -4,7 +4,7 @@ Utils for QA about administrative fine
 
 #### Example of use:
 ```
-git clone ..
+git clone https://github.com/nikolaevkona/AdmCodeQA.git
 pip install -r AdmCodeQA/requirements.txt
 wget -O coap.txt "https://www.dropbox.com/scl/fi/i56hj3za7ale9tiedaiza/coap.txt?rlkey=tjde2ubbfgx6rnsyn3mgksvqn&dl=1"
 mkdir vector_store

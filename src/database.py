@@ -39,10 +39,10 @@ class AdminData:
             n_results=top_k,
         )
         context = list()
-        for meta, document in zip(query_results["metadatas"][0],
+        for meta, title in zip(query_results["metadatas"][0],
                                   query_results["documents"][0]):
-            document = document.replace("\n\n", "\n").replace("\n\n", "\n")
-            context.extend([meta["title"], document, "\n"])
+            document = meta["text"].replace("\n\n", "\n").replace("\n\n", "\n")
+            context.extend([title, document, "\n"])
         return "".join(context)
 
     def _build_database(self, paragraphs: List[Dict], save_path: str,
@@ -57,11 +57,12 @@ class AdminData:
             embedding_function=embedding_func,
             metadata={"hnsw:space": "cosine"},
         )
-        self._collection.add(
-            documents=[element["text"] for element in paragraphs],
-            ids=[f"id{i}" for i in range(len(paragraphs))],
-            metadatas=[{"title": element["title"]} for element in paragraphs]
-        )
+        if self._collection.count() == 0:
+            self._collection.add(
+                documents=[element["title"] for element in paragraphs],
+                ids=[f"id{i}" for i in range(len(paragraphs))],
+                metadatas=[{"text": element["text"]} for element in paragraphs]
+            )
 
     def _parse_doc(self, data_path: str) -> List[Dict]:
         paragraphs = list()
